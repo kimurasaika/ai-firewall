@@ -10,7 +10,12 @@
       "Bash(python3 -c ' *)",
       "Bash(curl -s \"http://localhost:8428/api/v1/query?query=dlp_requests_total\")",
       "Bash(curl -s \"http://localhost:8428/api/v1/query?query=vm_app_uptime_seconds\")",
-      "PowerShell(\\(Invoke-RestMethod \"http://localhost:8428/metrics\"\\) -split \"`n\" | Select-String \"vm_app_uptime\" | Select-Object -First 5)"
+      "PowerShell(\\(Invoke-RestMethod \"http://localhost:8428/metrics\"\\) -split \"`n\" | Select-String \"vm_app_uptime\" | Select-Object -First 5)",
+      "PowerShell(docker info *)",
+      "PowerShell(Stop-Process *)",
+      "PowerShell(wsl --shutdown 2>&1; Start-Sleep -Seconds 5; Write-Host \"WSL shutdown done\")",
+      "PowerShell(docker version *)",
+      "PowerShell(Get-Process *)"
     ]
   }
 }

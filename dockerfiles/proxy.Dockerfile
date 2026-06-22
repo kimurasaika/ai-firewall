@@ -21,5 +21,7 @@ EXPOSE 8080
 HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
   CMD python -c "import socket; s=socket.create_connection(('localhost',8080),2)" || exit 1
 
-CMD ["mitmdump", "--listen-host", "0.0.0.0", "--listen-port", "8080", "--mode", "transparent", \
-     "--ssl-insecure", "--scripts", "src/proxy/interceptor.py"]
+CMD ["mitmdump", "--listen-host", "0.0.0.0", "--listen-port", "8080", \
+     "--mode", "regular", "--ssl-insecure", \
+     "--set", "block_global=false", \
+     "-s", "src/proxy/interceptor.py"]

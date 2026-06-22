@@ -45,8 +45,13 @@ class DLPInterceptor:
 
     def load(self, loader: object) -> None:
         self._llm_domains = load_llm_domains()
-        self._client = build_httpx_client("proxy")
-        logger.info("DLPInterceptor loaded: %d domains monitored", len(self._llm_domains))
+        is_dev = os.environ.get("ENVIRONMENT", "dev") == "dev"
+        if is_dev:
+            # In dev, skip mTLS cert verification to avoid self-signed CA chain issues
+            self._client = httpx.AsyncClient(verify=False, timeout=30)
+        else:
+            self._client = build_httpx_client("proxy")
+        logger.info("DLPInterceptor loaded: %d domains monitored (dev=%s)", len(self._llm_domains), is_dev)
 
     def _is_llm_domain(self, host: str) -> bool:
         return any(host == d or host.endswith("." + d) for d in self._llm_domains)
@@ -70,6 +75,9 @@ class DLPInterceptor:
         flow.metadata["dlp_session_id"] = session_id
 
         content = flow.request.content or b""
+        if not content:
+            return  # GET / HEAD / empty body — nothing to redact
+
         content_type = flow.request.headers.get("content-type", "text/plain")
         is_binary = not content_type.startswith("text") and "json" not in content_type
 
