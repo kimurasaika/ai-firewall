@@ -59,10 +59,16 @@ services:
 
   victoriametrics:
     image: victoriametrics/victoria-metrics:v1.99.0
+    command:
+      - "--promscrape.config=/etc/vm/scrape.yml"
+      - "--storageDataPath=/victoria-metrics-data"
     ports:
       - "8428:8428"
     volumes:
       - vm_data:/victoria-metrics-data
+      - ./config/victoriametrics/scrape.yml:/etc/vm/scrape.yml:ro
+    depends_on:
+      - orchestrator
     restart: unless-stopped
 
   loki:

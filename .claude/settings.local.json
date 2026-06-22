@@ -4,7 +4,13 @@
       "PowerShell(New-Item *)",
       "PowerShell(head *)",
       "Bash(docker compose *)",
-      "PowerShell(cd \"D:\\\\file before clean\\\\work\\\\python\\\\ai-firewall\"; \\(Get-Content \"certs\\\\redis\\\\redis.crt\" -Raw\\) -split \"-----END CERTIFICATE-----\" | Where-Object { $_ -match \"BEGIN CERTIFICATE\" } | Measure-Object | Select-Object -ExpandProperty Count)"
+      "PowerShell(cd \"D:\\\\file before clean\\\\work\\\\python\\\\ai-firewall\"; \\(Get-Content \"certs\\\\redis\\\\redis.crt\" -Raw\\) -split \"-----END CERTIFICATE-----\" | Where-Object { $_ -match \"BEGIN CERTIFICATE\" } | Measure-Object | Select-Object -ExpandProperty Count)",
+      "Bash(curl -s http://localhost:9090/metrics)",
+      "Bash(curl -s http://localhost:8428/api/v1/targets)",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -s \"http://localhost:8428/api/v1/query?query=dlp_requests_total\")",
+      "Bash(curl -s \"http://localhost:8428/api/v1/query?query=vm_app_uptime_seconds\")",
+      "PowerShell(\\(Invoke-RestMethod \"http://localhost:8428/metrics\"\\) -split \"`n\" | Select-String \"vm_app_uptime\" | Select-Object -First 5)"
     ]
   }
 }
