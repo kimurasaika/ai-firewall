@@ -1,0 +1,45 @@
+# Alert configuration — Admin only
+# Webhook URLs and addresses loaded from .env / Vault at runtime
+
+email:
+  enabled: true
+  from_address: "dlp-alert@company.local"
+  to_addresses:
+    - "it-admin@company.local"
+    - "security@company.local"
+  smtp_host: "smtp.company.local"
+  smtp_port: 587
+  use_tls: true
+  # SMTP_USERNAME and SMTP_PASSWORD from secret manager
+
+slack:
+  enabled: true
+  # SLACK_WEBHOOK_URL from secret manager
+  channel: "#dlp-alerts"
+  username: "AI-Firewall"
+  icon_emoji: ":shield:"
+
+alert_levels:
+  critical:
+    # DLP crash, Redis unreachable, mTLS cert expired
+    channels: [email, slack]
+    retry_count: 3
+    retry_interval_seconds: 30
+  warning:
+    # De-anonymization miss, high error rate
+    channels: [slack]
+    retry_count: 1
+    retry_interval_seconds: 60
+  info:
+    channels: [slack]
+    retry_count: 0
+
+triggers:
+  dlp_crash:
+    level: critical
+    message: "DLP Orchestrator is unreachable. LLM domains are now BLOCKED. Immediate action required."
+  redis_unavailable:
+    level: critical
+    message: "Redis mapping store is unreachable. Sessions may be lost."
+  cert_expiry_days: 14     # warn when mTLS cert expires within N days
+  deanon_miss_rate: 0.05   # warn when >5% of de-anonymizations fail

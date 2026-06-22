@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(New-Item *)",
+      "PowerShell(head *)",
+      "Bash(docker compose *)",
+      "PowerShell(cd \"D:\\\\file before clean\\\\work\\\\python\\\\ai-firewall\"; \\(Get-Content \"certs\\\\redis\\\\redis.crt\" -Raw\\) -split \"-----END CERTIFICATE-----\" | Where-Object { $_ -match \"BEGIN CERTIFICATE\" } | Measure-Object | Select-Object -ExpandProperty Count)"
+    ]
+  }
+}

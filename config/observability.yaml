@@ -1,0 +1,41 @@
+# Observability configuration — DevOps only
+
+opentelemetry:
+  service_name: ai-firewall
+  endpoint: http://jaeger:4317    # OTLP gRPC endpoint
+  insecure: false
+  sampling_rate: 1.0              # 100% in dev/staging; lower in prod if needed
+
+loki:
+  url: http://loki:3100
+  tenant_id: dlp                  # Loki multi-tenancy label
+  push_path: /loki/api/v1/push
+  batch_size: 100
+  batch_timeout_seconds: 5
+  labels:
+    env: "${ENVIRONMENT}"
+    app: ai-firewall
+  log_format: json
+
+victoriametrics:
+  url: http://victoriametrics:8428
+  scrape_interval_seconds: 15
+  metrics_path: /metrics          # prometheus-compatible endpoint per service
+  push_url: http://victoriametrics:8428/api/v1/import/prometheus
+
+grafana:
+  url: http://grafana:3000
+  # Dashboards provisioned from config/grafana/dashboards/ (mounted as volume)
+  datasources:
+    loki: http://loki:3100
+    victoriametrics: http://victoriametrics:8428
+    jaeger: http://jaeger:16686
+
+log_levels:
+  default: INFO
+  src.proxy: INFO
+  src.orchestrator: DEBUG
+  src.workers: INFO
+  src.deanonymizer: INFO
+  src.audit: WARNING            # only log when something unexpected happens
+  src.security: WARNING

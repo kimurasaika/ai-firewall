@@ -1,0 +1,47 @@
+# Security configuration — edited by DevOps only
+# Paths, ciphers, IP whitelist. Secrets (passwords, keys) live in Vault/.env
+
+mtls:
+  ca_cert: /app/certs/ca.crt
+  cert_dir: /app/certs/mtls
+  # Each service has: <service>.crt + <service>.key
+  services:
+    - orchestrator
+    - text_worker
+    - file_worker
+    - ocr_worker
+    - deanonymizer
+    - domain_updater
+    - dashboard_api
+  tls_version: TLSv1.3
+  ciphers: TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+
+redis_tls:
+  ca_cert: /app/certs/ca.crt
+  client_cert: /app/certs/redis/client.crt
+  client_key: /app/certs/redis/client.key
+  check_hostname: false
+
+admin_dashboard:
+  ip_whitelist:
+    - 127.0.0.1
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+  mfa_issuer: "AI-Firewall-Admin"
+  session_ttl_minutes: 60
+  rate_limit:
+    per_minute: 30
+    burst: 10
+
+audit_log:
+  hash_algorithm: SHA-256
+  write_once: true
+
+docker:
+  expose_socket: false
+  socket_path: /var/run/docker.sock
+
+kms:
+  provider: vault        # vault | awskms | local (dev)
+  vault_transit_key: dlp-audit-key

@@ -1,0 +1,28 @@
+# mitmproxy configuration — Network Admin only
+
+listen:
+  host: 0.0.0.0
+  port: 8080
+  mode: transparent         # transparent proxy mode
+
+ssl:
+  insecure: false
+  ca_cert: /app/certs/ca.crt
+  ca_key: /app/certs/ca.key   # loaded from secret manager
+  ssl_version: TLSv1.2        # minimum TLS version for client connections
+
+addons:
+  - src.proxy.interceptor     # DLP interceptor addon
+
+orchestrator:
+  url: https://orchestrator:8443   # mTLS endpoint
+  timeout_seconds: 30
+  connect_timeout: 5
+
+forwarding:
+  # Non-LLM traffic: forward as-is
+  pass_through_non_llm: true
+
+logging:
+  level: INFO
+  format: json

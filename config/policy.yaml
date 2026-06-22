@@ -1,0 +1,38 @@
+# Policy configuration — Network Admin only
+# Controls fail-safe, rate limiting, and request size limits
+
+fail_safe:
+  # If DLP Orchestrator crashes:
+  # - block all LLM-listed domains
+  # - pass all other internet traffic
+  # - alert admin immediately
+  mode: block_llm_on_crash
+  alert_on_crash: true
+  user_error_message: "AI tools are temporarily unavailable. Please contact IT support."
+  health_check_url: https://orchestrator:8443/health
+  health_check_interval_seconds: 10
+  consecutive_failures_before_block: 3
+
+rate_limiting:
+  enabled: true
+  per_user:
+    requests_per_minute: 60
+    requests_per_hour: 500
+    burst_size: 10
+  per_session:
+    requests_per_minute: 30
+  strategy: sliding_window
+
+request_limits:
+  max_body_size_mb: 50
+  max_text_length_chars: 500000
+  max_file_pages: 200        # PDF/DOCX page limit
+  max_image_size_mb: 20
+
+response_limits:
+  max_body_size_mb: 100
+  timeout_seconds: 120
+
+graceful_shutdown:
+  timeout_seconds: 30        # wait for in-flight requests before hard stop
+  flush_redis_on_stop: true

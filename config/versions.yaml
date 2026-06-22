@@ -1,0 +1,95 @@
+# Single source of truth for all dependency versions
+# DevOps edits this file — never pin versions in requirements.txt or Dockerfiles directly
+
+python: "3.11"
+
+services:
+  haproxy: "2.8"
+  mitmproxy: "10.3.1"
+  redis: "7.2"
+  timescaledb: "2.14"       # PostgreSQL 16 extension
+  vault: "1.16"
+  loki: "3.0.0"
+  victoriametrics: "1.99.0"
+  jaeger: "1.57"
+  grafana: "10.4.0"
+  docker: "25.0"
+
+python_packages:
+  fastapi: "0.111.0"
+  uvicorn: "0.30.1"
+  pydantic: "2.7.1"
+  pydantic-settings: "2.3.0"
+
+  # DLP / PII
+  presidio-analyzer: "2.2.354"
+  presidio-anonymizer: "2.2.354"
+  pythainlp: "5.0.4"
+  spacy: "3.8.4"
+  spacy-model-th: "3.7.0"
+
+  # File processing
+  pdfplumber: "0.11.1"
+  reportlab: "4.2.0"
+  python-docx: "1.1.2"
+  Pillow: "10.3.0"
+
+  # OCR
+  numpy: "1.26.4"           # pinned <2 — easyocr/opencv compiled with numpy 1.x ABI
+  easyocr: "1.7.1"
+  opencv-python-headless: "4.9.0.80"
+
+  # Fuzzy matching
+  rapidfuzz: "3.9.3"
+
+  # Redis
+  redis: "5.0.6"           # redis-py client
+
+  # Database
+  asyncpg: "0.29.0"
+  sqlalchemy: "2.0.30"
+
+  # Security / mTLS
+  cryptography: "42.0.7"
+  hvac: "2.1.0"            # HashiCorp Vault client
+
+  # Observability
+  opentelemetry-api: "1.24.0"
+  opentelemetry-sdk: "1.24.0"
+  opentelemetry-exporter-otlp-proto-grpc: "1.24.0"
+  opentelemetry-instrumentation-fastapi: "0.45b0"
+  opentelemetry-instrumentation-httpx: "0.45b0"
+  prometheus-client: "0.20.0"   # for /metrics scraping by VictoriaMetrics
+  python-json-logger: "2.0.7"
+
+  # Scheduling
+  apscheduler: "3.10.4"
+
+  # HTTP client
+  httpx: "0.27.0"
+  aiohttp: "3.9.5"
+
+  # Alerting
+  slack-sdk: "3.29.0"
+
+  # Rate limiting
+  slowapi: "0.1.9"
+
+  # Auth / MFA
+  pyotp: "2.9.0"
+  python-jose: "3.3.0"
+  passlib: "1.7.4"
+  bcrypt: "4.1.3"
+
+  # Utilities
+  python-multipart: "0.0.9"
+  PyYAML: "6.0.1"
+
+  # mitmproxy (installed separately — large)
+  mitmproxy: "10.3.1"
+
+nodejs:
+  node: "20"
+  react: "18.3.1"
+  tailwindcss: "3.4.4"
+  vite: "5.2.12"

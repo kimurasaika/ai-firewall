@@ -1,0 +1,35 @@
+# API endpoints — Frontend Dev only
+# Change base URLs and versioning here without touching source code
+
+api_version: v1
+
+internal:
+  orchestrator:
+    base_url: https://orchestrator:8443
+    version: v1
+    endpoints:
+      redact: /v1/redact
+      deanonymize: /v1/deanonymize
+      health: /health
+
+  dashboard_api:
+    base_url: https://dashboard-api:9443
+    version: v1
+    endpoints:
+      stats: /v1/stats
+      whitelist: /v1/whitelist
+      audit: /v1/audit
+      auth_login: /v1/auth/login
+      auth_mfa: /v1/auth/mfa
+      auth_refresh: /v1/auth/refresh
+
+  domain_updater:
+    base_url: https://domain-updater:8444
+    version: v1
+    endpoints:
+      status: /v1/status
+      trigger: /v1/trigger
+
+external:
+  # No external endpoints in v1 — all traffic proxied through mitmproxy
+  placeholder: null

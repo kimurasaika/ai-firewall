@@ -1,0 +1,28 @@
+# API keys configuration — Frontend Dev only
+# Actual key values come from .env / Vault — this file holds metadata only
+# DO NOT put real key values here
+
+keys:
+  dashboard_api:
+    name: Dashboard Internal API
+    env_var: DASHBOARD_API_KEY
+    description: Internal API key for admin dashboard → orchestrator communication
+    rotate_days: 90
+
+  admin_jwt_secret:
+    name: Admin JWT Secret
+    env_var: ADMIN_JWT_SECRET
+    description: JWT signing secret for admin dashboard sessions
+    rotate_days: 30
+
+  slack_webhook:
+    name: Slack Alert Webhook
+    env_var: SLACK_WEBHOOK_URL
+    description: Slack incoming webhook for DLP alerts
+    rotate_days: 365
+
+  smtp_password:
+    name: SMTP Password
+    env_var: SMTP_PASSWORD
+    description: SMTP auth for email alerts
+    rotate_days: 180

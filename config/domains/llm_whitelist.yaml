@@ -1,0 +1,78 @@
+# LLM domain whitelist — Admin only
+# DLP inspection applies to all traffic destined for these domains
+# Domain Updater (cron) merges auto-discovered domains into this file
+
+version: "1.0"
+updated_at: "2026-06-21T00:00:00Z"
+updated_by: "initial-setup"
+
+domains:
+  # OpenAI / ChatGPT
+  - domain: "chat.openai.com"
+    provider: openai
+    active: true
+  - domain: "api.openai.com"
+    provider: openai
+    active: true
+  - domain: "chatgpt.com"
+    provider: openai
+    active: true
+
+  # Google Gemini
+  - domain: "gemini.google.com"
+    provider: google
+    active: true
+  - domain: "generativelanguage.googleapis.com"
+    provider: google
+    active: true
+  - domain: "aistudio.google.com"
+    provider: google
+    active: true
+
+  # xAI Grok
+  - domain: "grok.x.com"
+    provider: xai
+    active: true
+  - domain: "api.x.ai"
+    provider: xai
+    active: true
+
+  # Anthropic Claude
+  - domain: "claude.ai"
+    provider: anthropic
+    active: true
+  - domain: "api.anthropic.com"
+    provider: anthropic
+    active: true
+
+  # Microsoft Copilot
+  - domain: "copilot.microsoft.com"
+    provider: microsoft
+    active: true
+  - domain: "sydney.bing.com"
+    provider: microsoft
+    active: true
+
+  # Meta AI
+  - domain: "www.meta.ai"
+    provider: meta
+    active: true
+
+  # Perplexity
+  - domain: "www.perplexity.ai"
+    provider: perplexity
+    active: true
+  - domain: "api.perplexity.ai"
+    provider: perplexity
+    active: true
+
+  # Cohere
+  - domain: "api.cohere.com"
+    provider: cohere
+    active: true
+
+auto_update:
+  enabled: true
+  schedule: "0 2 * * *"          # daily at 02:00
+  source_urls: []                 # populated by domain_updater
+  require_admin_approval: true    # new domains need approval before activation

@@ -1,0 +1,29 @@
+# Redis configuration — DevOps only
+# Passwords/TLS certs referenced here come from .env / Vault
+
+connection:
+  host: 127.0.0.1          # bind localhost only — never expose externally
+  port: 6379
+  db: 0
+  tls: true
+  require_tls: true
+
+auth:
+  # REDIS_PASSWORD loaded from secret manager at runtime
+  acl_enabled: true
+
+cluster:
+  enabled: false            # set true when scaling to 1000+ concurrent sessions
+  nodes: []
+
+session:
+  ttl_seconds: 3600         # 1 hour — matches requirements.md
+  key_prefix: "session:"
+  mapping_key_template: "session:{session_id}:{token}"
+
+pool:
+  max_connections: 100
+  socket_timeout: 5
+  socket_connect_timeout: 3
+  retry_on_timeout: true
+  health_check_interval: 30

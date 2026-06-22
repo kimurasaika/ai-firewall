@@ -1,0 +1,42 @@
+# Secrets — never commit
+.env
+.env.staging
+.env.production
+
+# Certificates — generated locally
+certs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# Node / React UI
+src/dashboard/ui/node_modules/
+src/dashboard/ui/dist/
+src/dashboard/ui/.vite/
+
+# Docker volumes (if mounted locally)
+data/
+backups/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
