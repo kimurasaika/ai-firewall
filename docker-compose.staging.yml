@@ -15,7 +15,7 @@ services:
     volumes:
       - ./config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     ports:
-      - "8080:8080"
+      - "8888:8888"
       - "8404:8404"   # stats
     depends_on:
       - proxy_1

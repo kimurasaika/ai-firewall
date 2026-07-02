@@ -8,7 +8,7 @@ A corporate transparent HTTPS proxy that intercepts traffic to LLM platforms (Ch
 User Browser
     │
     ▼
-[mitmproxy Transparent Proxy :8080]
+[mitmproxy Transparent Proxy :8888]
     │  intercepts HTTPS, strips TLS
     ▼
 [DLP Orchestrator :8443]  ◄──► [Redis TLS]   (session token mapping)
@@ -27,7 +27,7 @@ User Browser  (sees real response, PII never left the network)
 
 | Service | Port | Description |
 |---|---|---|
-| `proxy` | 8080 | mitmproxy transparent HTTPS proxy |
+| `proxy` | 8888 | mitmproxy transparent HTTPS proxy |
 | `orchestrator` | 8443 | DLP engine — redact / de-anonymize |
 | `dashboard_api` | 9443 | Admin REST API (MFA + IP whitelist) |
 | `dashboard_ui` | 3001 | React admin dashboard |

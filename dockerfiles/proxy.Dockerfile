@@ -16,12 +16,12 @@ COPY config/ /app/config/
 ENV PYTHONPATH=/app
 ENV PYTHONUNBUFFERED=1
 
-EXPOSE 8080
+EXPOSE 8888
 
 HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
-  CMD python -c "import socket; s=socket.create_connection(('localhost',8080),2)" || exit 1
+  CMD python -c "import socket; s=socket.create_connection(('localhost',8888),2)" || exit 1
 
-CMD ["mitmdump", "--listen-host", "0.0.0.0", "--listen-port", "8080", \
+CMD ["mitmdump", "--listen-host", "0.0.0.0", "--listen-port", "8888", \
      "--mode", "regular", "--ssl-insecure", \
      "--set", "block_global=false", \
      "-s", "src/proxy/interceptor.py"]

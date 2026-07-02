@@ -16,7 +16,7 @@ COPY dockerfiles/requirements/orchestrator.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 # Download spaCy + PyThaiNLP models
-RUN python -m spacy download en_core_web_lg || true
+RUN python -m spacy download en_core_web_sm || true
 RUN python -c "import pythainlp; pythainlp.corpus.download('orchid_ud')" || true
 
 COPY src/ /app/src/

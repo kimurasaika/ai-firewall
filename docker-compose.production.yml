@@ -41,7 +41,7 @@ services:
       - ./config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
       - ./certs:/certs:ro
     ports:
-      - "8080:8080"
+      - "8888:8888"
       - "8404:8404"
     depends_on:
       - proxy_1

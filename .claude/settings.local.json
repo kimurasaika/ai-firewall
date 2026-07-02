@@ -15,7 +15,17 @@
       "PowerShell(Stop-Process *)",
       "PowerShell(wsl --shutdown 2>&1; Start-Sleep -Seconds 5; Write-Host \"WSL shutdown done\")",
       "PowerShell(docker version *)",
-      "PowerShell(Get-Process *)"
+      "PowerShell(Get-Process *)",
+      "Bash(docker run *)",
+      "Bash(MSYS_NO_PATHCONV=1 docker run --rm -v \"/c/Users/User/ai-firewall/certs\":/certs alpine/openssl x509 -in /certs/mtls/orchestrator.crt -noout -subject -issuer -ext subjectAltName -dates)",
+      "Bash(MSYS_NO_PATHCONV=1 docker run --rm -v \"/c/Users/User/ai-firewall/certs\":/certs alpine/openssl x509 -in /certs/redis/redis.crt -noout -subject -issuer -ext subjectAltName -dates)",
+      "Bash(MSYS_NO_PATHCONV=1 docker run --rm -v \"/c/Users/User/ai-firewall/certs\":/certs alpine/openssl x509 -in /certs/ca.crt -noout -subject -issuer -dates -text)",
+      "Bash(MSYS_NO_PATHCONV=1 docker run *)",
+      "PowerShell(cd C:\\\\Users\\\\User\\\\ai-firewall; powershell -ExecutionPolicy Bypass -File .\\\\scripts\\\\generate_certs.ps1 -Force)",
+      "Bash(docker network *)",
+      "Bash(docker exec ai-firewall-orchestrator-1 *)",
+      "Bash(docker stats *)",
+      "Bash(docker top *)"
     ]
   }
 }

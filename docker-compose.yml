@@ -36,6 +36,11 @@ services:
     volumes:
       - ./certs:/tls:ro
       - redis_data:/data
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 128M
     restart: unless-stopped
 
   timescaledb:
@@ -48,6 +53,11 @@ services:
       - tsdb_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 128M
     restart: unless-stopped
 
   jaeger:
@@ -104,7 +114,7 @@ services:
       <<: *common-env
       ORCHESTRATOR_HOST: 0.0.0.0
       ORCHESTRATOR_PORT: "8443"
-      ORCHESTRATOR_WORKERS: "2"
+      ORCHESTRATOR_WORKERS: "1"
       DATABASE_URL: postgresql+asyncpg://dlp_user:${TIMESCALEDB_PASSWORD:-changeme}@timescaledb:5432/dlp_audit
     volumes:
       - ./certs:/app/certs:ro
@@ -115,6 +125,11 @@ services:
     depends_on:
       - redis
       - timescaledb
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 3G
     restart: unless-stopped
 
   proxy:
@@ -126,14 +141,19 @@ services:
       <<: *common-env
       ORCHESTRATOR_URL: https://orchestrator:8443
       PROXY_LISTEN_HOST: 0.0.0.0
-      PROXY_LISTEN_PORT: "8080"
+      PROXY_LISTEN_PORT: "8888"
     volumes:
       - ./certs:/app/certs:ro
       - ./config:/app/config:ro
     ports:
-      - "8080:8080"
+      - "8888:8888"
     depends_on:
       - orchestrator
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 256M
     restart: unless-stopped
 
   domain_updater:
@@ -167,6 +187,11 @@ services:
       - "9443:9443"
     depends_on:
       - timescaledb
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 256M
     restart: unless-stopped
 
   dashboard_ui:

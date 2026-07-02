@@ -4,9 +4,8 @@ from __future__ import annotations
 import io
 import logging
 import time
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-import easyocr
 from PIL import Image, ImageDraw
 
 from opentelemetry import trace
@@ -15,15 +14,21 @@ from src.observability.metrics import request_latency, worker_errors_total
 from src.observability.tracer import get_tracer
 from src.workers.text_worker import TextWorker
 
+if TYPE_CHECKING:
+    import easyocr
+
 logger = logging.getLogger(__name__)
 tracer = get_tracer("ocr_worker")
 
-_READER: easyocr.Reader | None = None
+_READER: "easyocr.Reader | None" = None
 
 
-def _get_reader() -> easyocr.Reader:
+def _get_reader() -> "easyocr.Reader":
     global _READER
     if _READER is None:
+        # Deferred import — easyocr pulls in torch, which is heavy to load
+        # into memory before any image request has actually arrived.
+        import easyocr
         # Load both Thai and English; GPU disabled for predictable resource use
         _READER = easyocr.Reader(["th", "en"], gpu=False)
         logger.info("EasyOCR reader initialized")

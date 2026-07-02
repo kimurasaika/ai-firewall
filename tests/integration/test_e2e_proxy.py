@@ -22,7 +22,7 @@ import httpx
 import pytest
 
 PROXY_HOST = os.environ.get("PROXY_HOST", "localhost")
-PROXY_PORT = int(os.environ.get("PROXY_PORT", "8080"))
+PROXY_PORT = int(os.environ.get("PROXY_PORT", "8888"))
 MOCK_LLM_URL = os.environ.get("MOCK_LLM_URL", "http://localhost:9999")
 
 # httpx client routed through mitmproxy
